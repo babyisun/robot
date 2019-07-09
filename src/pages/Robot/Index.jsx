@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Card, Input, Tooltip } from 'antd';
+import { Card, Popconfirm } from 'antd';
 import ListHead from '@/components/Common/ListHead';
 import Filter from '#/components/form/filter';
 import Table from '#/components/table';
 import DateSelect from '#/components/date';
-import { createSelect, createDate } from '#/utils/createDom';
+import { createDate, createTag } from '#/utils/createDom';
 import { LastWeek } from '#/utils/time';
-import {
-  GENDER,
-} from '@/utils/const';
+import { STATUS } from '@/utils/const';
 import { formatForm } from '#/utils/format';
-
 
 @observer
 class Robot extends Component {
   componentDidMount() {
-    const { list } = this.props;
-    list.onClearQuery();
-    list.load();
+    const { robot } = this.props;
+    robot.load();
   }
 
   // 查询项
@@ -30,18 +26,7 @@ class Robot extends Component {
         el: <DateSelect limit />,
         option: {
           initialValue: LastWeek,
-        }
-
-      },
-      {
-        label: '手机号',
-        value: 'bind_phone',
-        el: <Input maxLength={11} placeholder="请输入" />,
-      },
-      {
-        label: '性别',
-        value: 'gender',
-        el: createSelect(GENDER.TIP),
+        },
       },
     ];
   };
@@ -49,33 +34,42 @@ class Robot extends Component {
   // 列表项目
   columns = () => [
     {
-      title: '昵称',
-      dataIndex: 'nick_name',
+      title: '群名',
+      dataIndex: 'groupName',
     },
     {
-      title: '手机号',
-      dataIndex: 'bind_phone',
+      title: '机器人名',
+      dataIndex: 'name',
     },
     {
-      title: '性别',
-      dataIndex: 'gender',
-      render: v => v > 0 ? (
-        <Tooltip title={GENDER.TIP[v]}>
-          <i
-            className={`iconfont icon-${GENDER.DATA[v]}`}
-            style={{ color: GENDER.COLOR[v], fontSize: 16 }}
-          />
-        </Tooltip>
-      ) : '',
+      title: 'Key',
+      dataIndex: 'key',
     },
     {
-      title: '注册时间',
-      dataIndex: 'regist_time',
+      title: '状态',
+      dataIndex: 'status',
+      render: v => createTag(STATUS, v),
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createdAt',
       render: v => createDate(v, 'time'),
     },
     {
-      title: '下单量',
-      dataIndex: 'order_cnt',
+      title: '操作',
+      render: (value, row) => {
+        const { robot } = this.props;
+        return (
+          <Popconfirm
+            title="确定删除?"
+            onConfirm={() => {
+              robot.add(row);
+            }}
+          >
+            <a>删除</a>
+          </Popconfirm>
+        );
+      },
     },
   ];
 
@@ -84,23 +78,23 @@ class Robot extends Component {
   };
 
   render() {
-    const { list } = this.props;
+    const { robot } = this.props;
     return (
       <Card>
         <ListHead />
         <Filter
           fields={this.fields()}
-          onSearch={val => list.onSearch(val)}
+          onSearch={val => robot.onSearch(val)}
           formatParams={this.formatParams}
         />
         <Table
           columns={this.columns()}
-          dataSource={list.data}
-          loading={list.loadLoading}
-          onChangePage={list.onChangePage}
+          dataSource={robot.data}
+          loading={robot.loadLoading}
+          onChangePage={robot.onChangePage}
           pagination={{
-            total: list.total,
-            current: list.pagination.page,
+            total: robot.total,
+            current: robot.pagination.page,
           }}
         />
       </Card>

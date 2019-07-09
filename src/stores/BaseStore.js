@@ -32,7 +32,10 @@ export default class BaseStroe extends MobXBase {
     console.log("current user:", u);
     if (u && u.attributes) {
       if (u.attributes.status === USER_STATUS.DEFINE.ON) {
-        this.user = u.attributes;
+        this.user = {
+          ...u.attributes,
+          id: u.id
+        };
       } else {
         Modal.error({
           title: '账号异常',
@@ -47,6 +50,25 @@ export default class BaseStroe extends MobXBase {
       window.location.replace('/#/login');
     }
   }
+
+  get currUser() {
+    const u = AV.User.current();
+    if (u && u.attributes) {
+      return {
+        ...u.attributes,
+        id: u.id
+      };
+    }
+    return {};
+  }
+
+  // @action.bound currUser() {
+  //   const u = AV.User.current();
+  //   if (u && u.attributes) {
+  //     return { ...u.attributes, id: u.id};
+  //   } 
+  //   return null;
+  // }
 
   @action.bound setCurrPage(json) {
     this.currPage = json;
@@ -85,5 +107,18 @@ export default class BaseStroe extends MobXBase {
       this.load(treeID);
       console.log('baseStore: page changed');
     }
+  };
+
+  get page() {
+    if (this.pagination) {
+      const skip = (this.pagination.page - 1) * this.pagination.page_size;
+      const limit = this.pagination.page_size;
+      console.log('baseStore: get page', skip, limit);
+      return {
+        skip,
+        limit
+      };
+    }
+    return null;
   };
 }

@@ -5,6 +5,24 @@ export const LAYOUT = {
   FIXED_PAGE: [''],
 };
 
+// 数据状态
+export const STATUS = {
+  DEFINE: {
+    DELETE: -1, // 删除,
+    OFF: 0, // 禁用
+    ON: 1, // 正常
+  },
+  DATA: {
+    [-1]: '删除',
+    0: '禁用',
+    1: '正常',
+  },
+  COLOR: {
+    0: 'red',
+    1: 'green',
+  },
+};
+
 export const ERRNO = {
   SUCCESS: 0,
 };
