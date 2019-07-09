@@ -34,4 +34,4 @@ jsconfig.json
 .vscode
 
 # SELF
-git.sh
+/src/config.js
