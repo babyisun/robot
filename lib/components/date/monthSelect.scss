@@ -1,0 +1,7 @@
+.month{
+    :global {
+        .ant-calendar-time .ant-calendar-footer .ant-calendar-time-picker-btn{
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+.table {
+  :global {
+    .ant-table-row {
+      p {
+        margin: 0;
+      }
+      p.sub, span.sub {
+        color: #ccc;
+      }
+    }
+    span .summaryTd {
+      cursor: pointer;
+    }
+    tr.drop-over-downward td {
+      border-bottom: 2px dashed var(--primary-color);
+    }
+
+    tr.drop-over-upward td {
+      border-top: 2px dashed var(--primary-color);
+    }
+  }
+}
+
+.iconAvg::before,
+.iconSum:before {
+  content: '均';
+  font-size: 12px;
+  border-radius: 50px;
+  border: 1px solid var(--primary-color);
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: var(--primary-color);
+  text-align: center;
+  font-style: normal;
+  position: relative;
+  margin-right: 5px;
+  // cursor: pointer;
+}
+
+.iconSum:before {
+  content: '和';
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+

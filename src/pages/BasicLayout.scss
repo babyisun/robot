@@ -1,0 +1,335 @@
+$dark: #000;
+$error: #f5222d;
+$menu-item-color: #818d99;
+$menu-item-active-bg: #1890ff;
+
+body {
+  :global {
+    // 重置表单错误提示
+    .ant-form-item {
+      &.ant-form-item-with-help {
+        margin-bottom: 24px;
+
+        .ant-transfer-list {
+          border-color: $error;
+        }
+
+        .ant-input.ant-transfer-list-search {
+          border-color: #d9d9d9;
+          box-shadow: none;
+        }
+      }
+
+      .ant-form-explain,
+      .ant-form-split {
+        position: absolute;
+        top: -32px;
+        left: 0;
+        padding: 3px 8px;
+        color: #fff !important;
+        font-size: 12px;
+        line-height: 20px;
+        background: $error;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(#000, 0.3);
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          bottom: -4px;
+          border-top: 4px solid $error;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          transform: translateX(-50%);
+        }
+      }
+    }
+
+    .ant-menu-submenu .ant-menu {
+      .ant-menu-item-selected {
+        a {
+          color: #fff;
+          // background: var(--primary-color);
+        }
+      }
+    }
+
+    .ant-menu-inline-collapsed-tooltip a {
+      color: #fff !important;
+    }
+
+    .ant-modal {
+      // .ant-row-flex
+      .ant-form-item {
+        margin-bottom: 10px;
+        position: relative;
+
+        label {
+          width: 120px;
+          display: inline-block;
+          text-align: right;
+        }
+
+        input,
+        select {
+          width: 350px;
+        }
+      }
+    }
+
+    .ant-menu-submenu-popup .ant-menu .ant-menu-submenu .ant-menu-submenu-title i.iconfont {
+      margin-right: 4px;
+    }
+
+    .ant-calendar-range .ant-calendar-footer-extra {
+      float: right;
+    }
+
+    #root {
+      > .ant-layout {
+        .ant-card {
+          height: 100%;
+          border: 0;
+          padding: 10px;
+          margin: 10px 0;
+          .ant-card-body {
+            padding: 0 24px;
+            min-height: calc(100% - 100px);
+          }
+          .ant-card {
+            border: 1px solid #e8e8e8;
+            .ant-card-extra button {
+              height: 30px;
+            }
+          }
+          // 详情页通用样式
+          .ant-descriptions {
+            margin-bottom: 20px;
+            .ant-descriptions-item-content {
+              img {
+                margin: 10px;
+                max-width: 160px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+
+        .ant-layout.ant-layout-has-sider {
+          .ant-layout-sider {
+            position: fixed;
+            top: 67px;
+            bottom: 0;
+
+            // background: #001529;
+            // box-shadow: 1px 0 4px rgba(51, 51, 51, .8);
+            &.ant-layout-sider-collapsed + .ant-layout {
+              margin-left: 80px;
+            }
+
+            &.ant-layout-sider-collapsed {
+              .ant-layout-sider-children {
+                .ant-menu {
+                  .ant-menu-submenu,
+                  .ant-menu-item {
+                    i {
+                      padding-left: 34px;
+                    }
+
+                    a {
+                      background-position: 28px 15px;
+                      background-size: 20px 20px;
+
+                      span {
+                        opacity: 0;
+                      }
+                    }
+                  }
+
+                  .ant-menu-submenu .ant-menu-submenu-title {
+                    width: 80px;
+                    padding: 0 !important;
+                  }
+                }
+              }
+            }
+
+            .ant-layout-sider-children {
+              height: calc(100vh - 70px - 48px);
+              padding-top: 5px;
+              overflow-y: auto;
+
+              &::-webkit-scrollbar {
+                display: none;
+              }
+
+              .ant-menu {
+                border-right: 0;
+
+                .ant-menu-submenu {
+                  color: $menu-item-color;
+
+                  i.ant-menu-submenu-arrow {
+                    &::before,
+                    &::after {
+                      color: $menu-item-color !important;
+                    }
+                  }
+
+                  .ant-menu-submenu-title {
+                    height: 50px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    padding-left: 40px !important;
+                    padding-right: 30px !important;
+                    line-height: 50px;
+                  }
+
+                  .ant-menu-sub .ant-menu-item a {
+                    padding-left: 65px !important;
+                  }
+
+                  //  4.13 yc 修改支持3级菜单
+                  .ant-menu .ant-menu-sub .ant-menu-item a {
+                    padding-left: 95px !important;
+                  }
+                }
+
+                .ant-menu-item {
+                  line-height: 50px;
+                  height: auto;
+                  margin-top: 5px;
+                  margin-bottom: 5px;
+                  padding-left: 0 !important;
+                  padding-right: 0 !important;
+
+                  &.ant-menu-item-selected {
+                    // background-color: transparent;
+                    color: $menu-item-color;
+
+                    i {
+                      color: #1890ff;
+                    }
+                  }
+
+                  a {
+                    line-height: inherit;
+                    height: 50px;
+                    // padding-left: 65px;
+                    padding-right: 30px;
+                  }
+                }
+              }
+            }
+
+            .ant-layout-sider-trigger i {
+              vertical-align: middle;
+
+              &::before,
+              &:after {
+                content: '';
+                position: absolute;
+                width: 8px;
+                height: 1.5px;
+                background: $menu-item-color;
+                border-radius: 2px;
+              }
+
+              &::before {
+                transform: rotate(-45deg) translateX(3px);
+              }
+
+              &:after {
+                transform: rotate(-135deg) translateX(-3px);
+              }
+            }
+
+            &.ant-layout-sider-collapsed {
+              .ant-layout-sider-trigger i {
+                &::before {
+                  transform: rotate(-135deg) translateX(3px);
+                }
+
+                &:after {
+                  transform: rotate(-45deg) translateX(-3px);
+                }
+              }
+            }
+          }
+
+          .ant-layout {
+            margin-left: 260px;
+            background: #f2f2f2;
+
+            // transition: margin-left .2s;
+            .ant-layout-content {
+              position: relative;
+              margin: 30px;
+
+              .ant-card {
+                border-color: #efefef;
+              }
+            }
+
+            .ant-layout-footer {
+              padding: 0 30px 20px;
+              color: #888;
+              font-size: 12px;
+              text-align: center;
+              background: transparent;
+            }
+          }
+        }
+      }
+
+      .ant-table {
+        padding-bottom: 4px;
+        .ant-table-row td i {
+          // font-size: 20px;
+          // margin-right: 5px;
+          cursor: pointer;
+          color: #888;
+          display: inline-block;
+          transition: all 0.4s ease-out;
+
+          &:hover {
+            transform: scale(1.2);
+            color: #000;
+          }
+          // &.anticon-delete{
+          //     color: red;
+          // }
+        }
+        .control a {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.layout {
+  position: relative;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  // height: calc(100vh - 164px);
+  // margin: 121px 30px 10px;
+  height: calc(100vh - 148px);
+  margin: 108px 30px 10px;
+  background: white;
+  // flex: 1 0 auto;
+  // margin-top: 66px;
+}
+
+.full {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100vh;
+  // background: white;
+}

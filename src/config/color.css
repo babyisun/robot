@@ -1,0 +1,7 @@
+@value primaryColor: #1890ff;
+
+:root {
+  --primary-color: primaryColor;
+  --title-color: #fff;
+  --tag-bg-color: #fff;
+}

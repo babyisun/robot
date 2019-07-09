@@ -1,0 +1,17 @@
+.card-header {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+
+  :global {
+    h2{
+        font-size: 18px;
+    }
+    .ant-btn{
+        margin-top: -6px;
+    }
+
+    // & + .ant-table-wrapper {
+    //   margin-top: 4px;
+    // }
+  }
+}

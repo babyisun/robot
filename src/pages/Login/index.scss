@@ -1,0 +1,213 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-bottom: 10vh;
+  background-image: linear-gradient(#f0f2f5, #eee);
+  box-shadow: 0 0 100px hsla(0,0%,0%,.2) inset;
+  .area {
+    position: relative;
+    width: 420px;
+    // height: 430px;
+    padding: 20px 30px;
+    background: white;
+    border-radius: 10px;
+    :global {
+      .retrun-icon {
+        font-size: 18px;
+        color: #999999;
+      }
+    }
+  }
+  .loginHeader {
+    text-align: center;
+    // padding-top: 80px;
+    // margin-bottom: 30px;
+    :global {
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .logo {
+          width: 220px;
+          height: 70px;
+        }
+        img {
+          height: 44px;
+          vertical-align: top;
+          margin-right: 10px;
+        }
+        .title {
+          position: relative;
+          top: 2px;
+          font-size: 33px;
+          color: primaryColor;
+          font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+          font-weight: 600;
+        }
+      }
+      .desc {
+        font-size: 14px;
+        // margin: 10px 0 34px 0; // 无切换
+        margin: 4px 16px;
+        word-spacing: 2px;
+        // letter-spacing: 10px;
+      }
+      .logoText {
+        color: primaryColor;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+  }
+  .tabs {
+    padding: 0 2px;
+    margin: 0 -2px;
+    :global {
+      .ant-tabs-tab {
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .ant-input-affix-wrapper .ant-input:not(:first-child) {
+        padding-left: 34px;
+      }
+      .ant-input-prefix {
+        font-size: 15px;
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+  :global {
+    .ant-tabs .ant-tabs-bar {
+      border-bottom: 0;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+    .ant-steps {
+      margin-bottom: 10px;
+    }
+  }
+
+  .getCaptcha {
+    display: block;
+    width: 100%;
+  }
+
+  .captchaImg {
+    display: block;
+    height: 40px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .submit {
+    width: 100%;
+    margin-top: 24px;
+  }
+  .forget {
+    text-align: right;
+    :global {
+      .actionItem {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.me {
+  color: #666;
+  margin-right: 10px;
+  .icon {
+    margin-left: 5px;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  .name {
+    span {
+      margin: 0 16px 0 0;
+      i {
+        cursor: pointer;
+        display: inline-block;
+        &:hover {
+          font-weight: bold;
+          transform: scale(1.1);
+        }
+      }
+    }
+    .user {
+      color: #666;
+      margin-right: 10px;
+      .userIcon {
+        margin-left: 5px;
+      }
+    }
+  }
+  .avatar {
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+    background: #febc4e;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
+
+.userinfo {
+  :global {
+      .ant-modal-content {
+          .ant-form-item {
+              display: flex;
+              margin-bottom: 5px;
+          }
+          
+          .return {
+              display: flex;
+              justify-content: center;
+              margin-top: 20px;
+          }
+      }
+  }
+}
+
+.modalContainer {
+  :global {
+    .ant-modal-content {
+      // .ant-row-flex
+      .ant-form-item {
+        input,
+        select {
+          width: 100%;
+        }
+        .getCaptcha {
+          display: block;
+          width: 100%;
+        }
+        .submit {
+          width: 100%;
+          margin-top: 24px;
+          text-align: center;
+        }
+      }
+    }
+    // .current {
+    //   margin-top: 30px;
+    // }
+  }
+}

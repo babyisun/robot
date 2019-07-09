@@ -1,0 +1,29 @@
+@import '~@/config/web.scss';
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    :global {
+        .logo {
+            @include login-image;
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-left: 10px;
+            .desc {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .tag {
+                @include tag(#fff, var(--primary-color));
+            }
+        } 
+    }
+}

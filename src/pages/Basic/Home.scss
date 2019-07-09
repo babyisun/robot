@@ -1,0 +1,44 @@
+@import '~@/config/web.scss';
+
+.home {
+  background-color: #fff;
+  border-radius: 8px;
+  .welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // padding-top: 40px;
+    // padding-bottom: 40px;
+    height: calc(100vh - 180px);
+    text-align: center;
+    width: 100%;
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 60px;
+      // margin-bottom: 30px;
+      h2,
+      p {
+        margin-bottom: 0;
+      }
+      h2 {
+        font-size: 28px;
+        color: var(--primary-color);
+      }
+      p {
+        font-size: 20px;
+        color: #999;
+      }
+    }
+    .img {
+      @include home-image;
+      // width: 35vw;
+      // height: 27vw;
+      // background-image: url('~@/assets/common/welcome.png');
+      // background-repeat: no-repeat;
+      // background-size: cover;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true
+    },
+    "parser": "babel-eslint",
+    "extends": ["airbnb", "sf-react"],
+    "rules": {
+      "react/no-array-index-key": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/jsx-one-expression-per-line": "off",
+      "react/destructuring-assignment": "off",
+      "import/no-unresolved": "off",
+      "jsx-a11y/anchor-is-valid": "off",
+      "prettier/prettier": "off",
+      "no-console": "off",
+      "react/jsx-max-props-per-line": "off"
+    }
+  }

@@ -1,0 +1,36 @@
+// logo
+@mixin logo-image {
+  margin-top: 20px;
+  background: url('~@/assets/basic/logo.png') center center / 60px 60px no-repeat;
+  height: 66px;
+}
+
+// 首页主图配置
+@mixin home-image {
+  width: 20vw;
+  height: 20vw;
+  background-image: url('~@/assets/common/welcome.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin login-image {
+  width: 78px;
+  height: 68px;
+  background-image: url('~@/assets/basic/logo_dark.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+// 版本信息
+@mixin tag($color: #000, $bgColor: var(--tag-bg-color)) {
+  text-align: center;
+  margin: 0 auto;
+  color: $color;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: $bgColor;
+}
