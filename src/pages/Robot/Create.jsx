@@ -35,7 +35,7 @@ class Create extends Component {
       },
       {
         label: '所属群名',
-        value: 'group',
+        value: 'groupName',
         el: <Input placeholder="可以填写「公司-群名」" />,
         // span: 12,
         option: {
@@ -44,7 +44,7 @@ class Create extends Component {
       },
       {
         label: '配置链接',
-        value: 'key',
+        value: 'url',
         el: <Input placeholder="企业微信机器人中的Webhook地址" />,
         // span: 12,
         option: {
@@ -69,13 +69,6 @@ class Create extends Component {
             //   },
             //   message: 'xxxxx',
             // },
-            // {
-            //   validator: (r, v) => {
-            //     // console.log(r, v);
-            //     return v.includes('qyapi.weixin.qq.com') && v.includes('?key=');
-            //   },
-            //   message: '请输入正确的配置地址',
-            // },
           ],
         },
       },
@@ -85,19 +78,18 @@ class Create extends Component {
   onSubmit = e => {
     e.preventDefault();
     const {
-      // robot,
-      // history,
+      robot,
+      history,
       form: { validateFields },
     } = this.props;
-    console.log(123123);
     // const id = getParamsId(this.props);
     validateFields((err, values) => {
       if (!err) {
         console.log(values);
         // const params = { pass_uid: id, ...values };
-        // robot.submit(params, () => {
-        //   history.goBack();
-        // });
+        robot.submit(values, () => {
+          history.goBack();
+        });
       }
     });
   };

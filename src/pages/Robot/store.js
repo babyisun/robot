@@ -3,8 +3,11 @@ import {
   action,
   runInAction
 } from 'mobx';
+import {
+  message,
+} from 'antd';
 import BaseStroe from '@/stores/BaseStore';
-// import ajax from '@/utils/ajax';
+import ajax from '@/utils/ajax';
 import {
   loading,
   toProps
@@ -12,13 +15,19 @@ import {
 import RobotModel from '@/model/robot';
 import AV from '@/utils/av';
 
-import {
-  STATUS
-} from '@/utils/const';
+// import {
+//   STATUS
+// } from '@/utils/const';
 import {
   LastWeek
 } from '#/utils/time';
 
+// 接口函数统一定义
+const Api = {
+  send: params => ajax.post(`/robot`, {
+    ...params
+  }),
+};
 
 const Default_Props = {
   Pagination: {
@@ -56,14 +65,14 @@ class Robot extends BaseStroe {
   @action.bound @loading async load() {
     const query = new AV.Query(RobotModel)
       .equalTo('user', this.currUser.id)
-      .descending('createdAt')
-      .skip(this.page.skip)
-      .limit(this.page.limit);
+      .descending('createdAt');
     // const params = {
     //   ...this.query,
     //   ...this.pagination
     // };
-    const data = await AV.Promise.all([query.find(), query.count()]);
+    const data = await AV.Promise.all([query.find(),
+      query.skip(this.page.skip).limit(this.page.limit).count()
+    ]);
     // const total = await query.count();
     // const data = await query.find();
     console.log('query', data);
@@ -76,23 +85,30 @@ class Robot extends BaseStroe {
     });
   }
 
-  @action.bound @loading async submit() {
+  @action.bound @loading async submit(values) {
     const u = this.currUser;
-    console.log(u, 'ddd');
-    new RobotModel({
-      name: '我是机器人',
-      groupName: '神奇之群',
-      key: 'abc',
-      status: STATUS.DEFINE.ON,
-      user: u.id,
-    }).save().then((data) => {
-      console.log('data', data);
-    }).catch(error => console.error(error.message));
-    // runInAction(() => {
-    //   if (data && data.success) {
-    //     this.data = data.data.list;
-    //   }
-    // });
+    const key = values.url.split('key=');
+    console.log(values.url.split('key='), 'ddd');
+    if (key && key.length > 1) {
+      // new RobotModel({
+      //   name: values.name,
+      //   groupName: values.groupName,
+      //   url: values.url,
+      //   key: key[1],
+      //   status: STATUS.DEFINE.ON,
+      //   user: u.id,
+      // }).save().then(async (data) => {
+        // console.log('data', data);
+        const result = await Api.send({
+          url: values.url,
+          user: u.id,
+        });
+        if(result && result.success){
+          message.success('添加成功，请在企业微信查看测试消息');
+        }
+        // console.log(data);
+      // }).catch(error => message.error(error.message));
+    }
   }
 
   @action.bound clear() {

@@ -21,6 +21,11 @@ class Robot extends AV.Object {
   get key() { return this.get('key'); }
 
   set key(value) { this.set('key', value); }
+
+  // 链接地址
+  get url() { return this.get('url'); }
+
+  set url(value) { this.set('url', value); }
   
   // 签名
   get sign() { return this.get('sign'); }
