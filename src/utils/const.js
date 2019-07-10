@@ -5,6 +5,12 @@ export const LAYOUT = {
   FIXED_PAGE: [''],
 };
 
+// 角色
+export const ROLE = {
+  ADMIN: 'Admin',
+  NORMAL: 'Normal',
+};
+
 // 数据状态
 export const STATUS = {
   DEFINE: {
@@ -42,13 +48,6 @@ export const USER_STATUS = {
     0: 'red',
   },
 };
-
-// 角色
-export const ROLE = {
-  21: '负责人',
-  22: '员工'
-};
-
 
 // 支付方式
 export const PAY_METHOD = {

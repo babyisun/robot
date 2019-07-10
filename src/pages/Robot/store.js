@@ -42,11 +42,6 @@ class Robot extends BaseStroe {
 
   @observable pagination = Default_Props.Pagination;
 
-  @action.bound onClearQuery() {
-    this.query = Default_Props.Query;
-    this.pagination = Default_Props.Pagination;
-  }
-
   @observable query = Default_Props.Query;
 
   @action onSearch = (val) => {
@@ -81,7 +76,7 @@ class Robot extends BaseStroe {
     });
   }
 
-  @action.bound @loading async add() {
+  @action.bound @loading async submit() {
     const u = this.currUser;
     console.log(u, 'ddd');
     new RobotModel({
@@ -98,6 +93,11 @@ class Robot extends BaseStroe {
     //     this.data = data.data.list;
     //   }
     // });
+  }
+
+  @action.bound clear() {
+    this.query = Default_Props.Query;
+    this.pagination = Default_Props.Pagination;
   }
 
 }

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Layout, Tag } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
+// import CryptoJS from 'crypto-js';
+// import { AES, /* LEVEL */ } from '@/config';
 import Config from '@/config/config';
 import { Me } from '@/pages/Login';
 // import Download from '#/page/Download/Download';
@@ -30,6 +32,7 @@ class Header extends Component {
           info={user && [
             { label: '姓名', value: user.name },
             { label: '邮箱', value: user.email },
+            // { label: '等级', value: CryptoJS.AES.decrypt(user.level, `${AES.KEY}${user.email}`).toString(CryptoJS.enc.Utf8) },
             { label: '状态', value: <Tag color="green">启用</Tag> },
           ]}
           beforeExit={bs.logout}

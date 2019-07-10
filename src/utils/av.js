@@ -1,5 +1,5 @@
 import AV from 'leancloud-storage';
-import APP from '../config';
+import { APP } from '../config';
 
 AV.init(APP.ID, APP.KEY);
 // 调试信息

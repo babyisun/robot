@@ -78,10 +78,13 @@ class Robot extends Component {
   };
 
   render() {
-    const { robot } = this.props;
+    const { robot, history } = this.props;
     return (
       <Card>
-        <ListHead />
+        <ListHead 
+        btn="添加机器人"
+        onCreate={() => history.push({ pathname: `/robot/create` })}
+        />
         <Filter
           fields={this.fields()}
           onSearch={val => robot.onSearch(val)}

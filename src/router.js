@@ -16,9 +16,9 @@
  * children - 配置项递归同上
  */
 export const Key = {
-  Add: 'Create',
-  Edit: 'Edit',
-  Detail: 'Detail',
+  Add: 'create',
+  Edit: 'edit',
+  Detail: 'detail',
   ID: ':id',
   EditID: ':editid'
 };
@@ -33,6 +33,7 @@ const router = [{
       name: '添加机器人',
       path: `/robot/${Key.Add}`,
       folder: '/Robot',
+      file: 'Create',
       code: 101,
       hide: true,
     }],

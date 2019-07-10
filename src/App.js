@@ -17,7 +17,6 @@ import Home from '@/pages/Basic/Home';
 import Login from '@/pages/Basic/Login';
 
 // eslint-disable-next-line import/extensions
-import Download from '#/page/Download/index.jsx';
 import Page404 from '#/page/404';
 import { Panel, MESSAGE } from '#/components/panel';
 
@@ -41,7 +40,6 @@ const App = () => {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               {Routes}
-              <Route exact path="/download" component={Download} />
               <Route exact path="/nopower" component={NoPower} />
               <Route component={Page404} />
             </Switch>

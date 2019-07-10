@@ -1,4 +1,5 @@
 import React from 'react';
+// import { Init } from '@/config';
 import Config from '@/config/config';
 import styles from './Home.scss';
 
@@ -12,5 +13,5 @@ const Home = () => (
     </div>
   </div>
 );
-
+// Init();
 export default Home;

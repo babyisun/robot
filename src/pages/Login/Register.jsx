@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, message, Spin, Modal } from 'antd';
+import CryptoJS from 'crypto-js';
+import { AES, LEVEL } from '@/config';
 import { R_EMAIL, R_PASSWORD } from '#/utils/pattern';
 import { USER_STATUS } from '@/utils/const';
 
@@ -47,7 +49,10 @@ class Register extends Component {
             user.setPassword(values.registerPass);
             user.setEmail(values.registerEmail);
             // 记录姓名、默认启用状态
-            const params = { name: values.registerName, status: USER_STATUS.DEFINE.ON };
+            const params = { name: values.registerName,
+              status: USER_STATUS.DEFINE.ON,
+              level: CryptoJS.AES.encrypt(LEVEL.NORMAL, `${AES.KEY}${values.registerEmail}`).toString()
+             };
             user.signUp(params).then(
               loginedUser => {
                 // 注册成功

@@ -4,12 +4,11 @@ import styles from './button.scss';
 
 const FormItem = Form.Item;
 
-const Btn = ({ onSubmit, history, loading = false }) => (
+const Btn = ({ history, loading = false }) => (
   <FormItem className={styles.btn}>
     <Row gutter={24} type="flex" justify="center">
       <Col>
-        <Button type="primary" loading={loading} onClick={() => onSubmit()}>
-
+        <Button type="primary" loading={loading} htmlType='submit'>
           确定
         </Button>
       </Col>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, Row, Col } from "antd";
 import { clearNull } from "../../utils/format";
-import log from "../../page/Download/storem";
 import styles from "./filter.scss";
 /*
  * Form
@@ -49,7 +48,6 @@ class Filter extends Component {
       form: { validateFields },
       formatParams,
       onSearch,
-      onExport
     } = this.props;
     validateFields((err, values) => {
       values = clearNull(values);
@@ -60,13 +58,9 @@ class Filter extends Component {
           const exprotParams = !formatParams
             ? { ...values }
             : formatParams(values);
+          console.log(exprotParams);
           // delete exprotParams.page;
           // delete exprotParams.page_size;
-          if (onExport) {
-            onExport({ ...exprotParams, export: 1 });
-          } else {
-            log.setExportVisible({ ...exprotParams, export: 1 });
-          }
         }
       }
     });
