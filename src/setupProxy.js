@@ -14,5 +14,7 @@ const createProxy = (url, name) =>
 module.exports = app => {
   app.use(
     createProxy('/robot', me),
+    createProxy('/ucenter', me),
+    createProxy('/task', me),
   );
 };

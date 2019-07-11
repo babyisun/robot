@@ -6,6 +6,7 @@ import {
 import {
   message
 } from 'antd';
+// import AV from 'leancloud-storage';
 import BaseStroe from '@/stores/BaseStore';
 import ajax from '@/utils/ajax';
 import {
@@ -14,6 +15,8 @@ import {
 } from '#/mobx/decorator';
 // import { message } from 'antd';
 import URL from '@/utils/api';
+// import TaskModel from '@/model/task';
+
 
 // 接口函数统一定义
 const Api = {
@@ -21,8 +24,8 @@ const Api = {
     params
   }),
 };
-@toProps('account')
-class Account extends BaseStroe {
+@toProps('task')
+class Task extends BaseStroe {
   // 监听store声明
   @observable total = 0;
 
@@ -91,5 +94,5 @@ class Account extends BaseStroe {
     this.formData = {};
   }
 }
-const store = new Account();
+const store = new Task();
 export default store;

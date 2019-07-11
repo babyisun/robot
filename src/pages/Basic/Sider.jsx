@@ -140,9 +140,9 @@ class Sider extends React.Component {
     // 拿到选中路由
     const p = `/${pathname
       .split('/')
-      .slice(1, 3)
+      .slice(1, 2)
       .join('/')}`;
-    // console.log(p,pathname);
+    console.log(p,pathname);
     return (
       <Layout.Sider
         className={styles.sider}

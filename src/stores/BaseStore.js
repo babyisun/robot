@@ -1,8 +1,10 @@
 import {
   observable,
   action,
+  runInAction,
   // runInAction,
 } from 'mobx';
+// import AV from 'leancloud-storage';
 import {
   Modal
 } from 'antd';
@@ -10,9 +12,15 @@ import MobXBase from '#/mobx';
 import {
   USER_STATUS
 } from '@/utils/const';
+import ajax from '@/utils/ajax';
 
-import AV from '@/utils/av';
+// import AV from '@/utils/av';
 
+// 接口函数统一定义
+const Api = {
+  getUser: () => ajax.get(`/ucenter/profile`),
+  logout: () => ajax.get(`/ucenter/logout`),
+};
 
 export default class BaseStroe extends MobXBase {
   @observable getUserLoading = false;
@@ -27,40 +35,76 @@ export default class BaseStroe extends MobXBase {
   @observable collapsed = false;
 
   // 获取用户信息、权限
-  @action.bound getUser() {
-    const u = AV.User.current();
-    console.log("current user:", u);
-    if (u && u.attributes) {
-      if (u.attributes.status === USER_STATUS.DEFINE.ON) {
-        this.user = {
-          ...u.attributes,
-          id: u.id
-        };
+  // @action.bound getUser() {
+  //   const u = AV.User.current();
+  //   console.log("current user:", u);
+  //   if (u && u.attributes) {
+  //     if (u.attributes.status === USER_STATUS.DEFINE.ON) {
+  //       this.user = {
+  //         ...u.attributes,
+  //         id: u.id
+  //       };
+  //     } else {
+  //       Modal.error({
+  //         title: '账号异常',
+  //         content: '对不起，您的账号已被禁用，请联系管理员。',
+  //         onOk() {
+  //           AV.User.logOut();
+  //           window.location.replace('/#/login');
+  //         },
+  //       });
+  //     }
+  //   } else {
+  //     window.location.replace('/#/login');
+  //   }
+  // }
+  @action.bound async getUser() {
+    this.getUserLoading = true;
+    const data = await Api.getUser();
+    if (data && data.success) {
+      const u = data.data;
+      if (u) {
+        if (u.status === USER_STATUS.DEFINE.ON) {
+          runInAction(() => {
+            this.user = {
+              ...u,
+              id: u.objectId
+            };
+            console.log('user:', this.user);
+            this.getUserLoading = false;
+          });
+        } else {
+          Modal.error({
+            title: '账号异常',
+            content: '对不起，您的账号已被禁用，请联系管理员。',
+            onOk() {
+              this.logout();
+            },
+          });
+          runInAction(() => {
+            this.getUserLoading = false;
+          });
+        }
       } else {
-        Modal.error({
-          title: '账号异常',
-          content: '对不起，您的账号已被禁用，请联系管理员。',
-          onOk() {
-            AV.User.logOut();
-            window.location.replace('/#/login');
-          },
+        runInAction(() => {
+          this.getUserLoading = false;
         });
+        window.location.replace('/#/login');
       }
-    } else {
-      window.location.replace('/#/login');
     }
+
   }
 
-  get currUser() {
-    const u = AV.User.current();
-    if (u && u.attributes) {
-      return {
-        ...u.attributes,
-        id: u.id
-      };
-    }
-    return {};
-  }
+  // get currUser() {
+  //   const u = AV.User.current();
+  //   if (u && u.attributes) {
+  //     return {
+  //       ...u.attributes,
+  //       id: u.id
+  //     };
+  //   }
+  //   return {};
+  // }
 
   // @action.bound currUser() {
   //   const u = AV.User.current();
@@ -84,7 +128,8 @@ export default class BaseStroe extends MobXBase {
   }
 
   @action.bound logout() {
-    AV.User.logOut();
+    // AV.User.logOut();
+    Api.logout();
     this.user = null;
     window.location.replace('/#/login');
   }

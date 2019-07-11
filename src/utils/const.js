@@ -83,3 +83,19 @@ export const GENDER = {
     2: '#ff36c2',
   },
 };
+
+// 支付方式
+export const MSG_TYPE = {
+  DEFINE: {
+    TEXT: 1,
+    MARKDOWN: 2,
+    IMAGE: 3,
+    NEWS: 4,
+  },
+  DATA: {
+    0: '文本消息',
+    1: '富文本消息',
+    2: '图片',
+    3: '新闻',
+  },
+};

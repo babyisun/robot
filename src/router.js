@@ -49,6 +49,7 @@ const router = [{
         path: `/task/${Key.Add}`,
         folder: '/Task',
         code: 201,
+        file: 'Create',
         // store: ['stores/Common'],
         hide: true,
       },

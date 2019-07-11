@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
+import AV from 'leancloud-storage';
 import { Form, Icon, Input, Button, message, Spin, Modal } from 'antd';
 import CryptoJS from 'crypto-js';
 import { AES, LEVEL } from '@/config';
@@ -8,7 +9,7 @@ import { USER_STATUS } from '@/utils/const';
 
 import styles from './index.scss';
 
-import AV from '@/utils/av';
+// import AV from '@/utils/av';
 
 
 const FormItem = Form.Item;

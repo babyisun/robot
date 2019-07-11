@@ -1,18 +1,21 @@
-/* eslint-disable no-underscore-dangle */
 import React, { Component, Fragment } from 'react';
+// import AV from 'leancloud-storage';
 import { Form, Icon, Input, Button, message, Spin } from 'antd';
+// import Cookie from 'js-cookie';
+import { inject } from 'mobx-react';
 // import { R_EMAIL } from '#/utils/pattern';
+import ajax from '@/utils/ajax';
+
 import PwdReset from './PwdReset';
 import ChangePassword from './ChangePassword';
 import Me from './Me';
 import Register from './Register';
 import styles from './index.scss';
 
-import AV from '@/utils/av';
-
 const FormItem = Form.Item;
 
 @Form.create()
+@inject('bs')
 class LoginPage extends Component {
   static defaultProps = {
     header: '',
@@ -24,11 +27,9 @@ class LoginPage extends Component {
       type: 'account',
       active: {
         account: ['username', 'password', 'captcha'],
-        mobile: ['telephone', 'captchaPhone', 'captchaPhoneImg'],
-        restpwd: ['newPass', 'confirmNewPass'],
+        // mobile: ['telephone', 'captchaPhone', 'captchaPhoneImg'],
       },
       // imgUrl: '',
-      token: '',
       isLoginLoading: false,
       feature: 0,
     };
@@ -48,51 +49,44 @@ class LoginPage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { active, type, token } = this.state;
+    const { active, type } = this.state;
     const { form } = this.props;
-    const activeFileds = active[!token ? type : 'restpwd'];
-    form.validateFields(activeFileds, { force: true }, (err, values) => {
+    const activeFileds = active[type];
+    form.validateFields(activeFileds, { force: true }, async (err, values) => {
       if (!err) {
         this.setState({ isLoginLoading: true });
-        const { username, password, newPass } = values;
-        if (!token) {
-          if (type === 'account') {
-            AV.User.logIn(username, password)
-              .then(
-                loginedUser => {
-                  // 登录成功
-                  console.log('user:', loginedUser);
-                  this.loginSuccessCallback();
-                },
-                error => {
-                  if (error && error.rawMessage) {
-                    message.error(error.rawMessage);
-                  }
-                },
-              )
-              .finally(() => this.setState({ isLoginLoading: false }));
+        const { username, password } = values;
+        if (type === 'account') {
+          const params = { username, password };
+          const data = await ajax.post('/ucenter/login', params);
+          if (data && data.success) {
+            this.loginSuccessCallback(data);
           }
-        } else {
-          // 存在风险重新设置密码
-          if (values.newPass !== values.confirmNewPass) {
-            message.warn('两次输入的密码不一样');
-            this.setState({ isLoginLoading: false });
-            return;
-          }
-          window.setPwd(
-            newPass,
-            token,
-            this.successSetPassword,
-            this.expired,
-            this.loginFailCallback,
-          );
+          this.setState({ isLoginLoading: false });
+          // AV.User.logIn(username, password)
+          //   .then(
+          //     loginedUser => {
+          //       // 登录成功
+          //       console.log('user:', loginedUser);
+          //       this.loginSuccessCallback();
+          //     },
+          //     error => {
+          //       if (error && error.rawMessage) {
+          //         message.error(error.rawMessage);
+          //       }
+          //     },
+          //   )
+          //   .finally(() => this.setState({ isLoginLoading: false }));
         }
       }
     });
   };
 
   // 登录成功
-  loginSuccessCallback = () => {
+  loginSuccessCallback = (data) => {
+    // console.log(data);
+    // Cookie.set('u', data);
+    this.user = data;
     const { homeUrl = '/' } = this.props;
     this.setState({ isLoginLoading: false }, () => {
       window.location.replace(homeUrl);
@@ -102,7 +96,7 @@ class LoginPage extends Component {
   successSetPassword = () => {
     const { loginUrl } = this.props;
     message.success('设置密码成功，请使用新密码登录', 1).then(() => {
-      this.setState({ isLoginLoading: false, token: null }, () => {
+      this.setState({ isLoginLoading: false }, () => {
         window.location.replace(loginUrl);
       });
     });
@@ -113,7 +107,7 @@ class LoginPage extends Component {
   // token 过期
   expired = ({ errmsg }) => {
     message.warn(`${errmsg}，请重新登录`);
-    this.setState({ isLoginLoading: false, token: null });
+    this.setState({ isLoginLoading: false });
   };
 
   // 登录失败
@@ -180,50 +174,17 @@ class LoginPage extends Component {
     );
   };
 
-  renderInputPassword = () => {
-    const { getFieldDecorator } = this.props.form;
-
-    return (
-      <Fragment>
-        <FormItem>
-          {getFieldDecorator('newPass', {
-            rules: [{ required: true, message: '请输入新密码' }],
-          })(
-            <Input
-              prefix={<Icon type="lock" />}
-              placeholder="请输入新密码"
-              type="password"
-              size="large"
-            />,
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator('confirmNewPass', {
-            rules: [{ required: true, message: '请确认新密码' }],
-          })(
-            <Input
-              prefix={<Icon type="lock" />}
-              placeholder="确认新密码"
-              type="password"
-              size="large"
-            />,
-          )}
-        </FormItem>
-      </Fragment>
-    );
-  };
-
   renderContent = () => {
-    const { token, isLoginLoading, feature } = this.state;
+    const { isLoginLoading, feature } = this.state;
     switch (feature) {
       case 0:
         return (
           <Spin tip="登录中..." spinning={isLoginLoading}>
             <Form onSubmit={this.handleSubmit}>
-              {!token ? this.renderAccount() : this.renderInputPassword()}
+              {this.renderAccount()}
               <FormItem>
                 <Button type="primary" htmlType="submit" className={styles.submit} size="large">
-                  {!token ? '登录' : '修改密码'}
+                  登录
                 </Button>
               </FormItem>
             </Form>

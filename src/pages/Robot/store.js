@@ -3,6 +3,7 @@ import {
   action,
   runInAction
 } from 'mobx';
+import AV from 'leancloud-storage';
 import {
   message,
 } from 'antd';
@@ -13,14 +14,14 @@ import {
   toProps
 } from '#/mobx/decorator';
 import RobotModel from '@/model/robot';
-import AV from '@/utils/av';
+// import AV from '@/utils/av';
 
 // import {
 //   STATUS
 // } from '@/utils/const';
-import {
-  LastWeek
-} from '#/utils/time';
+// import {
+//   LastWeek
+// } from '#/utils/time';
 
 // 接口函数统一定义
 const Api = {
@@ -35,8 +36,8 @@ const Default_Props = {
     page: 1,
   },
   Query: {
-    start_time: LastWeek[0].unix(),
-    end_time: LastWeek[1].unix(),
+    // start_time: LastWeek[0].unix(),
+    // end_time: LastWeek[1].unix(),
   },
 };
 
@@ -65,6 +66,7 @@ class Robot extends BaseStroe {
   @action.bound @loading async load() {
     const query = new AV.Query(RobotModel)
       .equalTo('user', this.currUser.id)
+      .contains('name', this.query.name || '')
       .descending('createdAt');
     // const params = {
     //   ...this.query,
@@ -98,15 +100,15 @@ class Robot extends BaseStroe {
       //   status: STATUS.DEFINE.ON,
       //   user: u.id,
       // }).save().then(async (data) => {
-        // console.log('data', data);
-        const result = await Api.send({
-          url: values.url,
-          user: u.id,
-        });
-        if(result && result.success){
-          message.success('添加成功，请在企业微信查看测试消息');
-        }
-        // console.log(data);
+      // console.log('data', data);
+      const result = await Api.send({
+        url: values.url,
+        user: u.id,
+      });
+      if (result && result.success) {
+        message.success('添加成功，请在企业微信查看测试消息');
+      }
+      // console.log(data);
       // }).catch(error => message.error(error.message));
     }
   }

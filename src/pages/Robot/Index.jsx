@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Card, Popconfirm } from 'antd';
+import { Card, Popconfirm, Input } from 'antd';
 import ListHead from '@/components/Common/ListHead';
 import Filter from '#/components/form/filter';
 import Table from '#/components/table';
-import DateSelect from '#/components/date';
+// import DateSelect from '#/components/date';
 import { createDate, createTag } from '#/utils/createDom';
-import { LastWeek } from '#/utils/time';
+// import { LastWeek } from '#/utils/time';
 import { STATUS } from '@/utils/const';
 import { formatForm } from '#/utils/format';
 
@@ -21,12 +21,9 @@ class Robot extends Component {
   fields = () => {
     return [
       {
-        label: '注册日期',
-        value: 'time',
-        el: <DateSelect limit />,
-        option: {
-          initialValue: LastWeek,
-        },
+        label: '机器人名',
+        value: 'name',
+        el: <Input placeholder="你的机器人叫什么" />,
       },
     ];
   };

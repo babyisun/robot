@@ -13,14 +13,14 @@ import { Question_Icon } from '@/utils/dom';
 @observer
 class Task extends Component {
   componentDidMount() {
-    const { account } = this.props;
-    account.load();
+    const { task } = this.props;
+    task.load();
   }
 
   updateStatus(pass_uid, status) {
-    const { account } = this.props;
+    const { task } = this.props;
     const param = { pass_uid, status };
-    account.submit(param);
+    task.submit(param);
   }
 
   // 查询项
@@ -101,7 +101,7 @@ class Task extends Component {
     formatForm(v, [{ from: 'time', to: ['start_time', 'end_time'], type: 'time' }]);
 
   render() {
-    const { account, history } = this.props;
+    const { task, history } = this.props;
     return (
       <Card>
         <ListHead
@@ -111,16 +111,16 @@ class Task extends Component {
         <Filter
           fields={this.fields()}
           formatParams={this.formatParams}
-          onSearch={account.onSearch}
+          onSearch={task.onSearch}
         />
         <List
           columns={this.columns()}
-          dataSource={account.data}
-          loading={account.loadLoading}
-          onChangePage={account.onChangePage}
+          dataSource={task.data}
+          loading={task.loadLoading}
+          onChangePage={task.onChangePage}
           pagination={{
-            total: account.total,
-            current: account.pagination.page,
+            total: task.total,
+            current: task.pagination.page,
           }}
         />
       </Card>

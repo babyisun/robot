@@ -1,4 +1,5 @@
-import AV from '@/utils/av';
+// import AV from '@/utils/av';
+import AV from 'leancloud-storage';
 
 class Robot extends AV.Object {
 
