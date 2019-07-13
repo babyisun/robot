@@ -3,7 +3,7 @@ import {
   action,
   runInAction
 } from 'mobx';
-import AV from 'leancloud-storage';
+// import AV from 'leancloud-storage';
 import {
   message,
 } from 'antd';
@@ -13,7 +13,7 @@ import {
   loading,
   toProps
 } from '#/mobx/decorator';
-import RobotModel from '@/model/robot';
+// import RobotModel from '@/model/robot';
 // import AV from '@/utils/av';
 
 // import {
@@ -26,6 +26,12 @@ import RobotModel from '@/model/robot';
 // 接口函数统一定义
 const Api = {
   send: params => ajax.post(`/robot`, {
+    ...params
+  }),
+  getList: params => ajax.get(`/robot/list`, {
+    params
+  }),
+  create: params => ajax.post(`/robot/create`, {
     ...params
   }),
 };
@@ -64,23 +70,22 @@ class Robot extends BaseStroe {
 
 
   @action.bound @loading async load() {
-    const query = new AV.Query(RobotModel)
-      .equalTo('user', this.currUser.id)
-      .contains('name', this.query.name || '')
-      .descending('createdAt');
-    // const params = {
-    //   ...this.query,
-    //   ...this.pagination
-    // };
-    const data = await AV.Promise.all([query.find(),
-      query.skip(this.page.skip).limit(this.page.limit).count()
-    ]);
-    // const total = await query.count();
-    // const data = await query.find();
+    // const query = new AV.Query(RobotModel)
+    //   .equalTo('user', this.user.id)
+    //   .contains('name', this.query.name || '')
+    //   .descending('createdAt');
+    // const data = await AV.Promise.all([query.find(),
+    //   query.skip(this.page.skip).limit(this.page.limit).count()
+    // ]);
+    const params = {
+      ...this.page,
+      ...this.query
+    };
+    const data = await Api.getList(params);
     console.log('query', data);
     runInAction(() => {
-      if (data) {
-        const [list, total] = data;
+      if (data && data.success) {
+        const [list, total] = data.data;
         this.data = list;
         this.total = total;
       }
@@ -92,6 +97,7 @@ class Robot extends BaseStroe {
     const key = values.url.split('key=');
     console.log(values.url.split('key='), 'ddd');
     if (key && key.length > 1) {
+      const data = await Api.create({ ...values, key: key[1] });
       // new RobotModel({
       //   name: values.name,
       //   groupName: values.groupName,
@@ -101,11 +107,11 @@ class Robot extends BaseStroe {
       //   user: u.id,
       // }).save().then(async (data) => {
       // console.log('data', data);
-      const result = await Api.send({
-        url: values.url,
-        user: u.id,
-      });
-      if (result && result.success) {
+      // const result = await Api.send({
+      //   url: values.url,
+      //   user: u.id,
+      // });
+      if (data && data.success) {
         message.success('添加成功，请在企业微信查看测试消息');
       }
       // console.log(data);

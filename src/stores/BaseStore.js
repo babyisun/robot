@@ -2,6 +2,7 @@ import {
   observable,
   action,
   runInAction,
+  // computed,
   // runInAction,
 } from 'mobx';
 // import AV from 'leancloud-storage';
@@ -66,6 +67,7 @@ export default class BaseStroe extends MobXBase {
       if (u) {
         if (u.status === USER_STATUS.DEFINE.ON) {
           runInAction(() => {
+            console.log('赋值了user')
             this.user = {
               ...u,
               id: u.objectId
@@ -85,33 +87,26 @@ export default class BaseStroe extends MobXBase {
             this.getUserLoading = false;
           });
         }
-      } else {
-        runInAction(() => {
-          this.getUserLoading = false;
-        });
-        window.location.replace('/#/login');
       }
+    } else {
+      runInAction(() => {
+        this.getUserLoading = false;
+      });
+      // window.location.replace('/#/login');
     }
+  }
 
+  @action.bound bindUser(user) {
+    this.user = user;
   }
 
   // get currUser() {
-  //   const u = AV.User.current();
-  //   if (u && u.attributes) {
-  //     return {
-  //       ...u.attributes,
-  //       id: u.id
-  //     };
-  //   }
-  //   return {};
+  //   return this.user || {};
   // }
 
-  // @action.bound currUser() {
-  //   const u = AV.User.current();
-  //   if (u && u.attributes) {
-  //     return { ...u.attributes, id: u.id};
-  //   } 
-  //   return null;
+  // @computed get currUser() {
+  //   console.log('computed');
+  //   return this.user;
   // }
 
   @action.bound setCurrPage(json) {

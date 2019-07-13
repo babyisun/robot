@@ -13,10 +13,10 @@ import styles from './Header.scss';
 @inject('bs')
 @observer
 class Header extends Component {
-  componentDidMount() {
-    const { bs } = this.props;
-    bs.getUser();
-  }
+  // componentDidMount() {
+  //   const { bs } = this.props;
+  //   bs.getUser();
+  // }
 
   render() {
     const { bs } = this.props;

@@ -13,7 +13,8 @@ import { formatForm } from '#/utils/format';
 @observer
 class Robot extends Component {
   componentDidMount() {
-    const { robot } = this.props;
+    const { robot, base } = this.props;
+    robot.bindUser(base.bs.user);
     robot.load();
   }
 

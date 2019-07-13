@@ -6,11 +6,11 @@ import Config from '@/config/config'
 
 
 const handleRedirect = {
-  110003: () => {
+  40: () => {
     window.location.replace(Config.Login.Url);
   },
-  110023: (data) => {
-    message.error(data.errmsg || '异常，请重新登录！', () => window.location.replace(Config.Login.Url));
+  41: (data) => {
+    message.error(data.errmsg || '账号被禁用', () => window.location.replace(Config.Login.Url));
   },
   110004: () => {
     window.location.replace('/#/nopower');

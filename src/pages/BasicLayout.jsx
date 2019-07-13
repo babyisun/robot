@@ -23,6 +23,11 @@ const { Content } = Layout;
 @inject('bs')
 @observer
 class BasicLayout extends React.Component {
+  componentDidMount() {
+    const { bs } = this.props;
+    bs.getUser();
+  }
+
   setLayout(path) {
     this.NeedHF = !LAYOUT.NotNeedHF.some(item => path.includes(item));
   }
