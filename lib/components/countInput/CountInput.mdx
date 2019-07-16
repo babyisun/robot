@@ -1,0 +1,62 @@
+---
+name: CountInput 计数框
+route: /CountInput
+# menu: 组件
+---
+import { Component } from 'react';
+import { Playground, PropsTable } from 'docz';
+import { Form } from 'antd';
+import CountInput from './CountInput.jsx';
+
+# CountInput
+
+带计数器的输入框。
+
+## 代码演示
+
+简单示例
+
+<Playground>
+  <CountInput type="input" count={100} />
+</Playground>
+
+文本域示例
+
+<Playground>
+  <CountInput type="textarea" count={100} />
+</Playground>
+
+表单中使用
+
+<Playground>
+  {
+    () => {
+      class Container extends Component {
+        render() {
+          const { form } = this.props;
+          return (
+            <Form>
+              <Form.Item label="表单测试">
+                {form.getFieldDecorator('text', {
+                  initialValue: '123',
+                  rules: [
+                    {
+                      required: true,
+                      message: '必填',
+                    },
+                  ],
+                })(<CountInput type="input" count={20} />)}
+              </Form.Item>
+            </Form>
+          );
+        }
+      }
+      const FormCountInput = Form.create()(Container);
+      return <FormCountInput/>
+    }
+  }
+</Playground>
+
+## API
+
+<PropsTable of={CountInput} />

@@ -5,6 +5,10 @@ export const LAYOUT = {
   FIXED_PAGE: [''],
 };
 
+export const ERRNO = {
+  SUCCESS: 0,
+};
+
 // 角色
 export const ROLE = {
   ADMIN: 'Admin',
@@ -21,16 +25,16 @@ export const STATUS = {
   DATA: {
     [-1]: '删除',
     0: '禁用',
-    1: '正常',
+    1: '启用',
   },
   COLOR: {
     0: 'red',
     1: 'green',
   },
-};
-
-export const ERRNO = {
-  SUCCESS: 0,
+  BTN:{
+    0: '启用',
+    1: '禁用',
+  }
 };
 
 // 账号状态
@@ -84,7 +88,7 @@ export const GENDER = {
   },
 };
 
-// 支付方式
+// 消息类型
 export const MSG_TYPE = {
   DEFINE: {
     TEXT: 1,
@@ -93,9 +97,39 @@ export const MSG_TYPE = {
     NEWS: 4,
   },
   DATA: {
-    0: '文本消息',
-    1: '富文本消息',
-    2: '图片',
-    3: '新闻',
+    1: '文本消息',
+    2: '富文本消息',
+    3: '图片',
+    4: '新闻',
+  },
+};
+
+// 任务类型
+export const TASK_TYPE = {
+  DEFINE: {
+    SINGLE: 1,
+    DAILY: 2,
+    WEEKLY: 3,
+    YEARLY: 4,
+  },
+  DATA: {
+    1: '单次',
+    2: '每日',
+    3: '每周',
+    4: '每月',
+    5: '每年',
+  },
+};
+
+// 周枚举
+export const WEEK = {
+  DATA: {
+    1: '周一',
+    2: '周二',
+    3: '周三',
+    4: '周四',
+    5: '周五',
+    6: '周六',
+    7: '周日',
   },
 };

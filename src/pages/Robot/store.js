@@ -25,13 +25,13 @@ import {
 
 // 接口函数统一定义
 const Api = {
-  send: params => ajax.post(`/robot`, {
+  send: params => ajax.post('/robot', {
     ...params
   }),
-  getList: params => ajax.get(`/robot/list`, {
+  getList: params => ajax.get('/robot/list', {
     params
   }),
-  create: params => ajax.post(`/robot/create`, {
+  create: params => ajax.post('/robot/create', {
     ...params
   }),
 };
@@ -93,11 +93,14 @@ class Robot extends BaseStroe {
   }
 
   @action.bound @loading async submit(values) {
-    const u = this.currUser;
+    // const u = this.currUser;
     const key = values.url.split('key=');
     console.log(values.url.split('key='), 'ddd');
     if (key && key.length > 1) {
-      const data = await Api.create({ ...values, key: key[1] });
+      const data = await Api.create({
+        ...values,
+        key: key[1]
+      });
       // new RobotModel({
       //   name: values.name,
       //   groupName: values.groupName,
@@ -112,7 +115,7 @@ class Robot extends BaseStroe {
       //   user: u.id,
       // });
       if (data && data.success) {
-        message.success('添加成功，请在企业微信查看测试消息');
+        message.success('添加成功，请在企业微信查看测试消息', () => window.location.replace('/#/robot'));
       }
       // console.log(data);
       // }).catch(error => message.error(error.message));

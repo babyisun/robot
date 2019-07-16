@@ -53,6 +53,14 @@ const router = [{
         // store: ['stores/Common'],
         hide: true,
       },
+      {
+        name: '查看任务',
+        path: `/task/${Key.Detail}/${Key.ID}`,
+        folder: '/Task',
+        code: 201,
+        file: 'Create',
+        hide: true,
+      }
     ],
   },
   {

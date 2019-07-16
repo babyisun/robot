@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Card, Form, Input, Row, Col } from 'antd';
+import { Card, Form, Input, Row, Col, DatePicker } from 'antd';
 import { getParamsId } from '#/utils/getParamsId';
-import { createSelect } from '#/utils/createDom';
-import { MSG_TYPE } from '@/utils/const';
+import { createSelect, createRadio } from '#/utils/createDom';
+import { MSG_TYPE, TASK_TYPE } from '@/utils/const';
 import Items from '#/components/form/items';
+import CountInput from '#/components/countInput';
 import Btn from '#/components/form/button';
 import ListHead from '@/components/Common/ListHead';
 
@@ -33,7 +34,6 @@ class Create extends Component {
         label: '任务名',
         value: 'name',
         el: <Input placeholder="请输入任务名" maxLength={20} />,
-        // span: 24,
         option: {
           initialValue: formData.name,
           validateFirst: true,
@@ -46,11 +46,46 @@ class Create extends Component {
         label: '类型',
         value: 'msgtype',
         el: createSelect(MSG_TYPE.DATA),
-        // span: 12,
         option: {
           initialValue: formData.msgtype,
           rules: [
             { required: true, message: '请输入手机号码', whitespace: true },
+          ],
+        },
+      },
+      {
+        label: '内容',
+        value: 'content',
+        el: <CountInput type="textarea" count={100} rows={10} />,
+        span: 24,
+        option: {
+          initialValue: formData.content,
+          rules: [
+            { required: true, message: '发送内容不能为空', whitespace: true },
+          ],
+        },
+      },
+      {
+        label: '频率',
+        value: 'peer',
+        el: createRadio(TASK_TYPE.DATA),
+        span: 24,
+        option: {
+          initialValue: formData.peer || '1',
+          rules: [
+            { required: true, message: '请选择频率' },
+          ],
+        },
+      },
+      {
+        label: '时间',
+        value: 'time',
+        el: <DatePicker />,
+        span: 12,
+        option: {
+          initialValue: formData.time,
+          rules: [
+            { required: true, message: '请选择时间' },
           ],
         },
       },

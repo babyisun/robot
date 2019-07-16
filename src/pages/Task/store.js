@@ -14,13 +14,17 @@ import {
   toProps
 } from '#/mobx/decorator';
 // import { message } from 'antd';
-import URL from '@/utils/api';
-// import TaskModel from '@/model/task';
 
 
 // 接口函数统一定义
 const Api = {
-  getList: params => ajax.get(`${URL.COMMON}list`, {
+  getList: params => ajax.get('/task/list', {
+    params
+  }),
+  create: params => ajax.post('/task/create', {
+    ...params
+  }),
+  detail: params => ajax.get('/task/detail', {
     params
   }),
 };
@@ -51,23 +55,25 @@ class Task extends BaseStroe {
 
   @action.bound @loading async load() {
     const params = {
-      ...this.query,
-      ...this.pagination
+      ...this.page,
+      ...this.query
     };
     const data = await Api.getList(params);
+    console.log('query', data);
     runInAction(() => {
       if (data && data.success) {
-        this.data = data.data.list;
-        this.total = data.data.total;
+        const [list, total] = data.data;
+        this.data = list;
+        this.total = total;
       }
     });
   }
 
-  @action.bound @loading async getDetail(pass_uid) {
+  @action.bound @loading async getDetail(objectId) {
     const params = {
-      pass_uid
+      objectId
     };
-    const data = await Api.getDetail(params);
+    const data = await Api.detail(params);
     runInAction(() => {
       if (data && data.success) {
         this.formData = data.data;
@@ -76,21 +82,16 @@ class Task extends BaseStroe {
   }
 
   // 创建、编辑、禁用用户
-  @action.bound @loading async submit(values, callback) {
-    const data = await Api[values.pass_uid ? 'editUser' : 'addUser']({
+  @action.bound @loading async submit(values) {
+    const data = await Api.create({
       ...values
     });
-    runInAction(() => {
-      if (data && data.success) {
-        message.success('操作成功');
-        this.load();
-        // eslint-disable-next-line no-unused-expressions
-        callback && callback();
-      }
-    });
+    if (data && data.success) {
+      message.success('任务创建成功，得令', () => window.location.replace('/#/task'));
+    }
   }
 
-  @action.bound clearDetail() {
+  @action.bound clear() {
     this.formData = {};
   }
 }
