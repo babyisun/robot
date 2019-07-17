@@ -15,11 +15,10 @@ class Create extends Component {
     // 加载数据
     const { task } = this.props;
     const id = getParamsId(this.props);
-    if(id)
-    task.getDetail(id);
+    if (id) task.getDetail(id);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     const { task } = this.props;
     task.clear();
   }
@@ -37,9 +36,7 @@ class Create extends Component {
         option: {
           initialValue: formData.name,
           validateFirst: true,
-          rules: [
-            { required: true, message: '请输入任务名', whitespace: true },
-          ],
+          rules: [{ required: true, message: '请输入任务名', whitespace: true }],
         },
       },
       {
@@ -48,9 +45,7 @@ class Create extends Component {
         el: createSelect(MSG_TYPE.DATA),
         option: {
           initialValue: formData.msgtype,
-          rules: [
-            { required: true, message: '请输入手机号码', whitespace: true },
-          ],
+          rules: [{ required: true, message: '请输入手机号码', whitespace: true }],
         },
       },
       {
@@ -60,9 +55,7 @@ class Create extends Component {
         span: 24,
         option: {
           initialValue: formData.content,
-          rules: [
-            { required: true, message: '发送内容不能为空', whitespace: true },
-          ],
+          rules: [{ required: true, message: '发送内容不能为空', whitespace: true }],
         },
       },
       {
@@ -72,21 +65,17 @@ class Create extends Component {
         span: 24,
         option: {
           initialValue: formData.peer || '1',
-          rules: [
-            { required: true, message: '请选择频率' },
-          ],
+          rules: [{ required: true, message: '请选择频率' }],
         },
       },
       {
         label: '时间',
         value: 'time',
-        el: <DatePicker />,
+        el: <DatePicker showTime />,
         span: 12,
         option: {
           initialValue: formData.time,
-          rules: [
-            { required: true, message: '请选择时间' },
-          ],
+          rules: [{ required: true, message: '请选择时间' }],
         },
       },
     ];
@@ -125,6 +114,12 @@ class Create extends Component {
                       onSubmit={this.onSubmit}
                       loading={task.submitLoading}
                       history={history}
+                      btns={[
+                        {
+                          name: '测试发送',
+                          fun: () => console.log('test send'),
+                        },
+                      ]}
                     />
                   </Col>
                 </Row>

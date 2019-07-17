@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-dom';
 import { observer } from 'mobx-react';
-import { Card, Popconfirm, Input } from 'antd';
+import { Card, Popconfirm, Input, Divider } from 'antd';
 import ListHead from '@/components/Common/ListHead';
 import Filter from '#/components/form/filter';
 import Table from '#/components/table';
@@ -55,17 +56,21 @@ class Robot extends Component {
     },
     {
       title: '操作',
-      render: (value, row) => {
+      render: (v, r) => {
         const { robot } = this.props;
         return (
-          <Popconfirm
-            title="确定删除?"
-            onConfirm={() => {
-              robot.add(row);
-            }}
-          >
-            <a>删除</a>
-          </Popconfirm>
+          <>
+            {/* <Link to={`/task/Create/${r.objcetId}`}>创建任务</Link> */}
+            <Divider type="vertical" />
+            <Popconfirm
+              title="确定删除?"
+              onConfirm={() => {
+                robot.add(r);
+              }}
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </>
         );
       },
     },
@@ -79,10 +84,7 @@ class Robot extends Component {
     const { robot, history } = this.props;
     return (
       <Card>
-        <ListHead 
-        btn="添加机器人"
-        onCreate={() => history.push({ pathname: `/robot/create` })}
-        />
+        <ListHead btn="添加机器人" onCreate={() => history.push({ pathname: `/robot/create` })} />
         <Filter
           fields={this.fields()}
           onSearch={val => robot.onSearch(val)}
