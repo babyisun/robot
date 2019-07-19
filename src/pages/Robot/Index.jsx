@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-dom';
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Card, Popconfirm, Input, Divider } from 'antd';
 import ListHead from '@/components/Common/ListHead';
@@ -58,9 +58,10 @@ class Robot extends Component {
       title: '操作',
       render: (v, r) => {
         const { robot } = this.props;
+        // console.log(r, 999);
         return (
           <>
-            {/* <Link to={`/task/Create/${r.objcetId}`}>创建任务</Link> */}
+            <Link to={`/task/Create/${r.objectId}`}>创建任务</Link>
             <Divider type="vertical" />
             <Popconfirm
               title="确定删除?"

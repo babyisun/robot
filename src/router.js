@@ -46,7 +46,7 @@ const router = [{
     code: 2,
     children: [{
         name: '添加任务',
-        path: `/task/${Key.Add}`,
+        path: `/task/${Key.Add}/${Key.ID}`,
         folder: '/Task',
         code: 201,
         file: 'Create',

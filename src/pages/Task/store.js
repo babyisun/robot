@@ -24,9 +24,15 @@ const Api = {
   create: params => ajax.post('/task/create', {
     ...params
   }),
+  getRobot: params => ajax.get('/robot/detail', {
+    params
+  }),
   detail: params => ajax.get('/task/detail', {
     params
   }),
+  // sendText: params => ajax.post('/robot/text', {
+  //   ...params
+  // }),
 };
 @toProps('task')
 class Task extends BaseStroe {
@@ -40,6 +46,8 @@ class Task extends BaseStroe {
     page_size: 10,
     page: 1,
   };
+
+  @observable robot = {};
 
   @observable formData = {};
 
@@ -77,6 +85,18 @@ class Task extends BaseStroe {
     runInAction(() => {
       if (data && data.success) {
         this.formData = data.data;
+      }
+    });
+  }
+
+  @action.bound @loading async getRobot(objectId) {
+    const params = {
+      objectId
+    };
+    const data = await Api.getRobot(params);
+    runInAction(() => {
+      if (data && data.success) {
+        this.robot = data.data;
       }
     });
   }

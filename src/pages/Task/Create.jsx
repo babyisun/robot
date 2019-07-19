@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Card, Form, Input, Row, Col, DatePicker } from 'antd';
-import { getParamsId } from '#/utils/getParamsId';
+import { getParams } from '#/utils/getParamsId';
 import { createSelect, createRadio } from '#/utils/createDom';
 import { MSG_TYPE, TASK_TYPE } from '@/utils/const';
 import Items from '#/components/form/items';
@@ -14,8 +14,10 @@ class Create extends Component {
   componentDidMount() {
     // 加载数据
     const { task } = this.props;
-    const id = getParamsId(this.props);
-    if (id) task.getDetail(id);
+    const params = getParams(this.props);
+    console.log(params, 87877);
+    if (params.id) task.getRobot(params.id);
+    if (params.editid) task.getDetail(params.editid);
   }
 
   componentWillUnmount() {
@@ -87,10 +89,10 @@ class Create extends Component {
       history,
       form: { validateFields },
     } = this.props;
-    const id = getParamsId(this.props);
+    const p = getParams(this.props);
     validateFields((err, values) => {
       if (!err) {
-        const params = { pass_uid: id, ...values };
+        const params = { ...p, ...values };
         task.submit(params, () => {
           history.goBack();
         });
